@@ -34,4 +34,13 @@ public struct Layer
     public string name;
     public string type;
     public int[] data;
+    public TiledObject[] objects;
+}
+
+[Serializable]
+public struct TiledObject
+{
+    public string name;
+    public int x;
+    public int y;
 }

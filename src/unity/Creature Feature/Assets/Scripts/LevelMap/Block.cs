@@ -1,24 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Block : MonoBehaviour {
-
-
+public class Block : MonoBehaviour
+{
     public Sprite[] blockImages;
 
-    public void SetInfo(int layer, int sprite)
+    public void SetInfo(int layer, int sprite, bool disableCollision = false)
     {
-        GetComponent<SpriteRenderer>().sprite = blockImages[sprite];
-    }
+        var spr = GetComponent<SpriteRenderer>();
+        try
+        {
+            spr.sprite = blockImages[sprite];
+        }
+        catch (System.IndexOutOfRangeException e)
+        {
+            print(e);
+        }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        spr.sortingLayerID = layer;
+        name = spr.sprite.name;
+        if (disableCollision)
+        {
+            //gameObject.layer = LayerMask.NameToLayer("Background");
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+    }
 }

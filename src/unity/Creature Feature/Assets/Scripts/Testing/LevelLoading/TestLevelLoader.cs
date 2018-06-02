@@ -8,40 +8,46 @@ public class TestLevelLoader : MonoBehaviour
 
     public GameObject prefab;
 
-	// Use this for initialization
+    public float cellWidth = 16f;
+    public float cellHeight = 16f;
+
+    public float screenWidthInBlocks = 16;
+    public float screenHeightInBlocks = 9;
+
 	void Start ()
     {
         var level = TileFactory.Create(levelName);
 
         float starty = level.Height / 2;
-        float startx = -level.Width / 2;
+        float startx = -screenWidthInBlocks / 2;
 
-        var data = level.Background;
-        for (int y = 0; y < level.Height; y++)
-        {
-            for (int x = 0; x < level.Width; x++)
-            {
-                int idx = data[x, y];
-                var copy = Instantiate(prefab);
-                copy.transform.parent = transform;
-                copy.transform.position = Vector3.zero;
-                copy.transform.localPosition = new Vector3(startx + x, starty - y, 0);
-                copy.GetComponent<Block>().SetInfo(0, idx);
-            }
-        }
+        float cw = level.TileWidth / cellWidth;
+        float ch = level.TileHeight / cellHeight;
 
-        data = level.Platforms;
-        for (int y = 0; y < level.Height; y++)
+        DrawBlocks(level.Background, SortingLayer.NameToID("Background"), level.Height, level.Width, cw, ch, startx, starty);
+        DrawBlocks(level.Platforms, SortingLayer.NameToID("Platforms"), level.Height, level.Width, cw, ch, startx, starty);
+    }
+
+    private void DrawBlocks(int[,] data, 
+                            int sortingLayer, 
+                            int height, 
+                            int width, 
+                            float cw, 
+                            float ch,
+                            float startx,
+                            float starty)
+    {
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < level.Width; x++)
+            for (int x = 0; x < width; x++)
             {
                 int idx = data[x, y];
                 if (idx == 0) continue;
                 var copy = Instantiate(prefab);
                 copy.transform.parent = transform;
                 copy.transform.position = Vector3.zero;
-                copy.transform.localPosition = new Vector3(startx + x, starty - y, 0);
-                copy.GetComponent<Block>().SetInfo(0, idx);
+                copy.transform.localPosition = new Vector3(startx + x * cw, starty - y * ch, 0);
+                copy.GetComponent<Block>().SetInfo(sortingLayer, idx);
             }
         }
     }
@@ -68,7 +74,9 @@ public class TestLevelLoader : MonoBehaviour
         float speed = 2f;
         transform.position = Vector3.Lerp(transform.position, transform.position + pos, Time.deltaTime);
         
-        
-
+        if (transform.position.x < 0)
+        {
+            transform.position = Vector3.zero;
+        }
     }
 }
