@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    GameObject _player;
+
     [Tooltip("The main player's prefab to spawn when the level starts")]
     public GameObject playerPrefab;
 
@@ -16,18 +19,33 @@ public class GameController : MonoBehaviour
     
 	void Start ()
     {
-        // TODO: At some point you'll want to bring this in from prefs or someplace else
-        var levelName = @"Testing\larger-map";
-        drawBlocks.Draw(levelName);
+        var levelSpawnPoint = GameObject.Find("SpawnPoint");
 
-        var spawnPoint = drawBlocks.PlayerStart;
-        spawnPoint.x = (drawBlocks.cellWidth * (spawnPoint.x / 256f)) -8f;
-        spawnPoint.y = 0f;
+        var spawnPoint = Vector2.zero;
 
-        var copy = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
-        followCam.target = copy.transform;
+        if (levelSpawnPoint == null)
+        {
+            // TODO: At some point you'll want to bring this in from prefs or someplace else
+            var levelName = @"Testing\larger-map";
+            drawBlocks.Draw(levelName);
 
-        var gun = copy.GetComponent<PlayerGun>();
+            spawnPoint = drawBlocks.PlayerStart;
+            spawnPoint.x = (drawBlocks.cellWidth * (spawnPoint.x / 256f)) - 8f;
+            spawnPoint.y = 0f;
+        }
+        else
+        {
+            spawnPoint = levelSpawnPoint.transform.position;
+        }
+
+        _player = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+        followCam.target = _player.transform;
+    }
+
+    internal void SetBullet(float cooldownPeriod, GameObject bulletPrefab)
+    {
+        var gun = _player.GetComponent<PlayerGun>();
         gun.bulletPrefab = bulletPrefab;
+        gun.cooldownPeriod = cooldownPeriod;
     }
 }
