@@ -43,9 +43,10 @@ public class Locomotion : MonoBehaviour {
         if (_speed.magnitude > 0.1f)
         {
             _rb.AddForce(_speed, ForceMode2D.Impulse);
-            if (_rb.velocity.magnitude > MAX_VELOCITY)
+            if (Mathf.Abs(_rb.velocity.x) > MAX_VELOCITY)
             {
-                _rb.velocity = _rb.velocity.normalized * MAX_VELOCITY;
+                // Taken from https://unity3d.com/learn/tutorials/topics/2d-game-creation/creating-basic-platformer-game
+                _rb.velocity = new Vector2(Mathf.Sign(_rb.velocity.x) * MAX_VELOCITY, _rb.velocity.y);
             }
         }
 	}
@@ -53,7 +54,7 @@ public class Locomotion : MonoBehaviour {
     IEnumerator DoJump()
     {
         canJump = false;
-        float force = 10f;
+        float force = 7.5f;
 
         _rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.25f);

@@ -13,7 +13,7 @@ public class FollowTargetCamera : MonoBehaviour
         var t = Time.deltaTime / DAMPENING;
 
         var targetPos = new Vector3(target.position.x, 0f, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, targetPos, t);
+        transform.position = Vector3.Lerp(targetPos, transform.position, t);
 
         // Minimum position
         if (transform.position.x < minX)

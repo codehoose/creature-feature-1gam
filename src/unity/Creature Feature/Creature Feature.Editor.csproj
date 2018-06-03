@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6F4B7494-5426-76C4-FA4D-3E27D926DAF8}</ProjectGuid>
+    <ProjectGuid>{F81F3DD8-7ECF-056F-27ED-559D25CC92D5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.3.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -288,17 +288,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Game\Camera\FollowTargetCamera.cs" />
-    <Compile Include="Assets\Scripts\Game\GameController.cs" />
-    <Compile Include="Assets\Scripts\Game\Locomotion\GroundProbe.cs" />
-    <Compile Include="Assets\Scripts\Game\Locomotion\Locomotion.cs" />
-    <Compile Include="Assets\Scripts\Game\Locomotion\PlayerGun.cs" />
-    <Compile Include="Assets\Scripts\LevelMap\Block.cs" />
-    <Compile Include="Assets\Scripts\LevelMap\DrawBlocks.cs" />
-    <Compile Include="Assets\Scripts\LevelMap\LevelTiles.cs" />
-    <Compile Include="Assets\Scripts\Testing\LevelLoading\TestLevelLoader.cs" />
-    <Compile Include="Assets\Scripts\Tiled\TiledFile.cs" />
-    <Compile Include="Assets\Scripts\Tiled\TileFactory.cs" />
+    <ProjectReference Include="Creature Feature.csproj">
+      <Project>{6F4B7494-5426-76C4-FA4D-3E27D926DAF8}</Project>
+      <Name>Creature Feature</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\ProCore\ProGrids\About\Editor\pg_AboutWindow.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Editor\pg_Editor.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Editor\pg_GridRenderer.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Editor\pg_ParameterWindow.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Editor\pg_Preferences.cs" />
+    <Compile Include="Assets\ProCore\ProGrids\Editor\pg_ToggleContent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\ProCore\ProGrids\About\changelog.txt" />
+    <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />
+    <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
