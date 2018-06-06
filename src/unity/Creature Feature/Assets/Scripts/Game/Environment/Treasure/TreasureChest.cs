@@ -22,16 +22,14 @@ public class TreasureChest : MonoBehaviour
     [Tooltip("The wait time before the icon fades away")]
     public float showDelay = 1.5f;
 
-    [Tooltip("The types of treasure available from this chest")]
+    [HideInInspector]
     public TreasureScriptableObject[] treasures;
     
     IEnumerator Start()
     {
-        var manager = FindObjectOfType<TreasureChestLevelManager>();
-
-        if (treasures==null || treasures.Length == 0)
+        while (treasures == null || treasures.Length == 0)
         {
-            yield break;
+            yield return null;
         }
 
         var rand = UnityEngine.Random.Range(0, treasures.Length);

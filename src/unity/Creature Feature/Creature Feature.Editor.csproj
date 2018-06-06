@@ -294,7 +294,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Game\Items\Editor\CreateScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Editor\MenuItems\CustomMenuItems.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
