@@ -3,9 +3,9 @@
 public class FollowTargetCamera : MonoBehaviour
 {
     const float DAMPENING = 0.1f;
-
-    public float minX = 0f; // TODO: Set max position too!
     
+    public Rect bounds;
+
     public Transform target;
 
     void LateUpdate()
@@ -16,9 +16,14 @@ public class FollowTargetCamera : MonoBehaviour
         transform.position = Vector3.Lerp(targetPos, transform.position, t);
 
         // Minimum position
-        if (transform.position.x < minX)
+        if (transform.position.x < bounds.xMin)
         {
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x > bounds.xMax)
+        {
+            transform.position = new Vector3(bounds.xMax, transform.position.y, transform.position.z);
         }
     }
 }
